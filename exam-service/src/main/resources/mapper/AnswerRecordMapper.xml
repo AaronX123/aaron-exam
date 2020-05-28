@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="aaron.exam.service.dao.mapper.AnswerRecordMapper">
+  <resultMap id="BaseResultMap" type="aaron.exam.service.pojo.model.AnswerRecord">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="my_answer" jdbcType="VARCHAR" property="myAnswer" />
+    <result column="standard_answer" jdbcType="VARCHAR" property="standardAnswer" />
+    <result column="score" jdbcType="DECIMAL" property="score" />
+    <result column="evaluate" jdbcType="VARCHAR" property="evaluate" />
+    <result column="paper_subject_id" jdbcType="BIGINT" property="paperSubjectId" />
+    <result column="exam_record_id" jdbcType="BIGINT" property="examRecordId" />
+  </resultMap>
+</mapper>

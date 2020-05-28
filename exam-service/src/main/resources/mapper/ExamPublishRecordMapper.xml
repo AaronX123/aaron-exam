@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="aaron.exam.service.dao.mapper.ExamPublishRecordMapper">
+  <resultMap id="BaseResultMap" type="aaron.exam.service.pojo.model.ExamPublishRecord">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="exam_session" jdbcType="INTEGER" property="examSession" />
+    <result column="publisher" jdbcType="BIGINT" property="publisher" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="plan_pepole_num" jdbcType="INTEGER" property="planPepoleNum" />
+    <result column="limit_time" jdbcType="INTEGER" property="limitTime" />
+    <result column="descript" jdbcType="VARCHAR" property="descript" />
+    <result column="marking_mode" jdbcType="BIGINT" property="markingMode" />
+    <result column="marking_stop_time" jdbcType="TIMESTAMP" property="markingStopTime" />
+    <result column="qrcode_url" jdbcType="VARCHAR" property="qrcodeUrl" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="company_id" jdbcType="BIGINT" property="companyId" />
+    <result column="created_by" jdbcType="BIGINT" property="createdBy" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="updated_by" jdbcType="BIGINT" property="updatedBy" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+    <result column="version" jdbcType="BIGINT" property="version" />
+    <result column="field1" jdbcType="VARCHAR" property="field1" />
+    <result column="field2" jdbcType="VARCHAR" property="field2" />
+    <result column="paper_id" jdbcType="BIGINT" property="paperId" />
+
+    <collection property="examRecords" ofType="aaron.exam.service.pojo.model.ExamRecord">
+      <id column="id" jdbcType="BIGINT" property="id" />
+      <result column="examiner" jdbcType="VARCHAR" property="examiner" />
+      <result column="tel" jdbcType="VARCHAR" property="tel" />
+      <result column="actual_start_time" jdbcType="TIMESTAMP" property="actualStartTime" />
+      <result column="actual_end_time" jdbcType="TIMESTAMP" property="actualEndTime" />
+      <result column="objective_subject_score" jdbcType="DECIMAL" property="objectiveSubjectScore" />
+      <result column="subjectvie_subject_score" jdbcType="DECIMAL" property="subjectvieSubjectScore" />
+      <result column="system_evaluate" jdbcType="VARCHAR" property="systemEvaluate" />
+      <result column="status" jdbcType="TINYINT" property="status" />
+      <result column="user_id" jdbcType="BIGINT" property="userId" />
+    </collection>
+  </resultMap>
+
+  <select id="queryAnswerRecord" resultMap="BaseResultMap" parameterType="aaron.exam.service.pojo.DTO.answersheet.ExamAnswerSheetRecordQueryFormDTO">
+    SELECT
+    exam_publish_record.title,
+    exam_publish_record.publisher,
+    exam_publish_record.exam_session,
+    exam_publish_record.end_time,
+    exam_record.tel,
+    exam_record.examiner,
+    exam_record.actual_start_time,
+    exam_record.actual_end_time,
+    exam_record.objective_subject_score,
+    exam_record.subjectvie_subject_score,
+    exam_record.id,
+    exam_publish_record.paper_id
+    FROM
+    exam_record,
+    exam_publish_record
+    <where>
+      exam_record.exam_publish_record_id=exam_publish_record.id
+      <if test="examSession!=null and examSession!=''">and exam_publish_record.exam_session like "${examSession}%"</if>
+      <if test="publisher!=null and publisher!=''">and exam_publish_record.publisher = #{publisher}</if>
+      <if test="title!=null and title!=''">and exam_publish_record.title like "${title}%"</if>
+      <if test="examTimeRange!=null and examTimeRange.size()!=0">and exam_publish_record.end_time &gt; "${examTimeRange.get(0)}"
+      and exam_publish_record.end_time &lt; "${examTimeRange.get(1)}"
+      </if>
+    </where>
+  </select>
+
+  <select id="queryExamPubulishRecord" resultMap="BaseResultMap" parameterType="aaron.exam.service.pojo.DTO.publish.ExamPublishRecordPublishFormDTO">
+    SELECT
+    t.id,
+    t.publisher,
+    t.created_time,
+    t.end_time,
+    t.plan_pepole_num,
+    t.limit_time,
+    t.title,
+    t.descript,
+    t.status,
+    t.version,
+    t.exam_session,
+    t.paper_id
+    FROM
+    exam_publish_record AS t
+    <where>
+      <if test="publisher!=null and publisher!=''">t.publisher like "${publisher}%"</if>
+      <if test="title!=null and title!=''">and t.title like "${title}%"</if>
+      <if test="examTimeRange!=null and examTimeRange.size()!=0">and t.start_time &gt; "${examTimeRange.get(0)}"
+        and t.end_time &lt; "${examTimeRange.get(1)}"
+      </if>
+      <if test="publishTimeRange!=null and publishTimeRange.size()!=0">and t.created_time &gt; "${publishTimeRange.get(0)}"
+        and t.created_time &lt; "${publishTimeRange.get(1)}"
+      </if>
+    </where>
+  </select>
+  
+  <delete id="deleteExamPublishRecord" parameterType="aaron.exam.service.pojo.DTO.publish.ExamPublishRecordDeleteFormDTO">
+      delete from exam_publish_record
+      <where>
+          <if test="id!=null">id=#{id}</if>
+          <if test="version!=null">and version=#{version}</if>
+      </where>
+  </delete>
+
+  <select id="queryGrade" resultMap="BaseResultMap" parameterType="aaron.exam.service.pojo.DTO.grade.ExamGradeRecordQueryFormDTO">
+    SELECT
+    r.id,
+    p.paper_id,
+    p.exam_session,
+    p.created_time,
+    r.tel,
+    r.examiner,
+    r.actual_end_time,
+    p.marking_stop_time,
+    r.objective_subject_score,
+    r.subjectvie_subject_score,
+    r.system_evaluate,
+    r.status
+    FROM
+    exam_record AS r,
+    exam_publish_record AS p
+    <where>
+        r.exam_publish_record_id=p.id
+        and r.user_id=#{userId}
+        <if test="endTimeRange!=null and endTimeRange.size()!=0">and r.actual_end_time &gt; "${endTimeRange.get(0)}"
+          and r.actual_end_time &lt; "${endTimeRange.get(1)}"
+        </if>
+        <if test="examSession!=null and examSession!=''">and p.exam_session like "${examSession}%"</if>
+        <if test="status!=null">and r.status=#{status}</if>
+    </where>
+  </select>
+
+</mapper>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="aaron.exam.service.dao.mapper.ExamRecordMapper">
+  <resultMap id="BaseResultMap" type="aaron.exam.service.pojo.model.ExamRecord">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="examiner_code" jdbcType="VARCHAR" property="examinerCode" />
+    <result column="examiner" jdbcType="VARCHAR" property="examiner" />
+    <result column="tel" jdbcType="VARCHAR" property="tel" />
+    <result column="sex" jdbcType="TINYINT" property="sex" />
+    <result column="user_attribute" jdbcType="TINYINT" property="userAttribute" />
+    <result column="plan_start_time" jdbcType="TIMESTAMP" property="planStartTime" />
+    <result column="plan_end_time" jdbcType="TIMESTAMP" property="planEndTime" />
+    <result column="actual_start_time" jdbcType="TIMESTAMP" property="actualStartTime" />
+    <result column="actual_end_time" jdbcType="TIMESTAMP" property="actualEndTime" />
+    <result column="objective_subject_score" jdbcType="DECIMAL" property="objectiveSubjectScore" />
+    <result column="subjectvie_subject_score" jdbcType="DECIMAL" property="subjectvieSubjectScore" />
+    <result column="score" jdbcType="DECIMAL" property="score" />
+    <result column="system_evaluate" jdbcType="VARCHAR" property="systemEvaluate" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="company_id" jdbcType="BIGINT" property="companyId" />
+    <result column="created_by" jdbcType="BIGINT" property="createdBy" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="updated_by" jdbcType="BIGINT" property="updatedBy" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+    <result column="version" jdbcType="BIGINT" property="version" />
+    <result column="exam_publish_record_id" jdbcType="BIGINT" property="examPublishRecordId" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+  </resultMap>
+</mapper>

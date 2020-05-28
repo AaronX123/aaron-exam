@@ -1,0 +1,53 @@
+aaron:
+  version: 1
+  data-center-id: 8
+  machine-id: 1
+
+spring:
+  application:
+    name: exam
+  #  redis:
+  #    database: 8
+  #    host: 118.31.7.229
+  #    port: 6379
+  #    password: xym123
+  #  datasource:
+  #    url: jdbc:mysql://118.31.7.229:3307/paper?characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai&allowMultiQueries=true&useAffectedRows=true
+  #    driver-class-name: com.mysql.cj.jdbc.Driver
+  #    username: root
+  #    password: xym123
+  datasource:
+    url: jdbc:mysql://localhost:3306/exam?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: xym123
+    driverClassName: com.mysql.cj.jdbc.Driver
+  redis:
+    database: 8
+    host: localhost
+    port: 6379
+    password: xym123
+
+server:
+  port: 10051
+  servlet:
+    context-path: /exam
+eureka:
+  client:
+    service-url:
+      # defaultZone: http://118.31.7.229:8761/eureka
+      defaultZone: http://localhost:8761/eureka/
+    registry-fetch-interval-seconds: 5
+
+  instance:
+    lease-expiration-duration-in-seconds: 15
+    lease-renewal-interval-in-seconds: 5
+    prefer-ip-address: false
+#    # 这个是本服务的ip和端口
+#    ip-address: 192.168.1.102
+#    non-secure-port: 10050
+mybatis:
+  type-aliases-package: aaron.exam.service.pojo.model
+  mapper-locations: classpath:mapper/*.xml
+
+ribbon:
+  ReadTimeout: 2000
